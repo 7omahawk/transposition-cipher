@@ -2,10 +2,8 @@
 
 import sys
 import math
-domain = 26
-string = "abcdefghijklmnopqrstuvwxyz"
 
-def writeByRow(key, userInput):
+def encryption(key, userInput):
     userInput = userInput.replace(" ","")    # excluding space from the sentence
     sizeOfKey = len(str(key))   # column size
     sizeOfInput = len(userInput)
@@ -21,23 +19,32 @@ def writeByRow(key, userInput):
 
     matrix = [["" for space in range(sizeOfKey)] for space in range(numberOfRow)] # making matrix
 
-    # entering every single value of input into matrix with padding
+    # row by row write-------------------###[step 1]
+    # inserting every single value of input into matrix with padding
     for i in range(numberOfRow):
         for j in range(sizeOfKey):
-            index = i * sizeOfKey + j
+            index = i * sizeOfKey + j   # when i = 0,1 and j = 0,1 then index =[[0][0],[0][1]],[[1][0],[1][1]] 
             if index < len(userInput):
                 matrix[i][j] = userInput[index]
 
-    print(matrix)
+    # shuffle the matrix with the key-------------------###[step 2]
+    strKey = str(key) # making integer key to string for store every individual index
+    shuffledMatrix = [["" for space in range(sizeOfKey)] for space in range(numberOfRow)] # making  new matrix for store the shuffled value
 
-def doingShuffle(key, userInput):
-    hi = "will be update soon"
+    for i in range(numberOfRow):
+        for j in range(sizeOfKey):
+            shuffledMatrix[i][j] = matrix[i][int(strKey[j])-1]
 
-def encryption(key, userInput):
-    hi = "will be update soon"
+    # count by column-------------------###[step 3]
+    cipher = ""
+    for i in range(sizeOfKey):     # have to reapet as column size
+        for j in range(numberOfRow):    # have to reapet as row size
+            value = shuffledMatrix[j][i]
+            cipher = cipher + value
+    print(f"The encrypted message is: {cipher}")
 
-
-
+def decryption(userInput, key, domain, string):
+    hi = "will be update"
 
 while(True):
     print("Enter your choice(Number): ")
@@ -52,14 +59,12 @@ while(True):
             userInput = input("Enter your text to encrypt: ")
             key = int(input("Enter the key: "))
             userInput = userInput.lower()
-            # encryption(userInput, key, domain, string)
-            writeByRow(key, userInput)
-
+            encryption(key, userInput)
         elif number == 2:
             userInput = input("Enter your text to decrypt: ")
             key = int(input("Enter the key: "))
             userInput = userInput.lower()
-            # decryption(userInput, key, domain, string)
+            decryption(userInput, key, domain, string)
         elif number == 3:
             sys.exit()
         else:

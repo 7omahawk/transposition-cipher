@@ -39,12 +39,29 @@ def encryption(key, userInput):
     cipher = ""
     for i in range(sizeOfKey):     # have to reapet as column size
         for j in range(numberOfRow):    # have to reapet as row size
-            value = shuffledMatrix[j][i]
+            value = shuffledMatrix[j][i]   # when i = 0,1 and j = 0,1 then value = [[0][0],[1][0]], [[0][1],[1][1]]
             cipher = cipher + value
     print(f"The encrypted message is: {cipher}")
 
-def decryption(userInput, key, domain, string):
-    hi = "will be update"
+def decryption(userInput, key):
+
+    sizeOfKey = len(str(key))   # column size
+    sizeOfInput = len(userInput)
+    numberOfRow = math.ceil(sizeOfInput / sizeOfKey) # row size
+
+    matrix = [["" for space in range(sizeOfKey)] for space in range(numberOfRow)] # making matrix
+    # column by column write-------------------###[step 1]
+    for i in range(sizeOfKey):
+        for j in range(numberOfRow):
+            index = i * numberOfRow + j   # when i = 0,1 and j = 0,1 then index =[[0][0],[0][1]],[[1][0],[1][1]] 
+            if index < len(userInput):
+                matrix[j][i] = userInput[index]   # when i = 0,1 and j = 0,1 then value of matrix= [[0][0],[1][0]], [[0][1],[1][1]]
+    print(matrix)
+
+    # shuffle by key
+
+    # write the plaintext
+
 
 while(True):
     print("Enter your choice(Number): ")
@@ -64,7 +81,7 @@ while(True):
             userInput = input("Enter your text to decrypt: ")
             key = int(input("Enter the key: "))
             userInput = userInput.lower()
-            decryption(userInput, key, domain, string)
+            decryption(userInput, key)
         elif number == 3:
             sys.exit()
         else:

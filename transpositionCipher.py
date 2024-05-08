@@ -7,6 +7,8 @@ def encryption(key, userInput):
     userInput = userInput.replace(" ","")    # excluding space from the sentence
     sizeOfKey = len(str(key))   # column size
     sizeOfInput = len(userInput)
+    global inputSize   # this is the global variable
+    inputSize = sizeOfInput
     
     numberOfRow = math.ceil(sizeOfInput / sizeOfKey) # row size
     totalLengthOfInput = sizeOfKey * numberOfRow
@@ -72,15 +74,15 @@ def decryption(userInput, key):
         for j in range(sizeOfKey):    # have to reapet as column size
             value = shuffledMatrix[i][j]   # when i = 0,1 and j = 0,1 then value = [[0][0],[0][1]], [[1][0],[1][1]]
             plaintext = plaintext + value
-    print(f"The original decrypted message is: {plaintext}")
 
-    # extract the paddings
-    plaintext = plaintext.replace("z","")    # excluding space from the sentence
-    print(f"The decrypted message is: {plaintext}")
+    # extract the maintext
+    finalText = ""
+    for i in range(len(plaintext)): 
+        if i < inputSize:    # input size is a global variable
+            value = i  
+            finalText = finalText + plaintext[i]
+    print(f"The original decrypted message is: {finalText}")
 
-    #-----------------------------------------------------------------#
-    #------in extract the padding have bugs i will fix it later-------#
-    #-----------------------------------------------------------------#
 
 while(True):
     print("Enter your choice(Number): ")

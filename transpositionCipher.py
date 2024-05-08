@@ -43,6 +43,7 @@ def encryption(key, userInput):
             cipher = cipher + value
     print(f"The encrypted message is: {cipher}")
 
+
 def decryption(userInput, key):
 
     sizeOfKey = len(str(key))   # column size
@@ -56,12 +57,30 @@ def decryption(userInput, key):
             index = i * numberOfRow + j   # when i = 0,1 and j = 0,1 then index =[[0][0],[0][1]],[[1][0],[1][1]] 
             if index < len(userInput):
                 matrix[j][i] = userInput[index]   # when i = 0,1 and j = 0,1 then value of matrix= [[0][0],[1][0]], [[0][1],[1][1]]
-    print(matrix)
 
-    # shuffle by key
+    # shuffle by key-------------------###[step 2]
+    strKey = str(key) # making integer key to string for store every individual index
+    shuffledMatrix = [["" for space in range(sizeOfKey)] for space in range(numberOfRow)] # making  new matrix for store the shuffled value
 
-    # write the plaintext
+    for i in range(numberOfRow):
+        for j in range(sizeOfKey):
+            shuffledMatrix[i][int(strKey[j])-1] = matrix[i][j]
 
+    # write the plaintext-------------------###[step 3]
+    plaintext = ""
+    for i in range(numberOfRow):     # have to reapet as row size
+        for j in range(sizeOfKey):    # have to reapet as column size
+            value = shuffledMatrix[i][j]   # when i = 0,1 and j = 0,1 then value = [[0][0],[0][1]], [[1][0],[1][1]]
+            plaintext = plaintext + value
+    print(f"The original decrypted message is: {plaintext}")
+
+    # extract the paddings
+    plaintext = plaintext.replace("z","")    # excluding space from the sentence
+    print(f"The decrypted message is: {plaintext}")
+
+    #-----------------------------------------------------------------#
+    #------in extract the padding have bugs i will fix it later-------#
+    #-----------------------------------------------------------------#
 
 while(True):
     print("Enter your choice(Number): ")

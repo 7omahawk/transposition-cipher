@@ -79,7 +79,6 @@ def decryption(userInput, key):
     finalText = ""
     for i in range(len(plaintext)): 
         if i < inputSize:    # input size is a global variable
-            value = i  
             finalText = finalText + plaintext[i]
     print(f"The original decrypted message is: {finalText}")
 
